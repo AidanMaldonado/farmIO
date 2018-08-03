@@ -22,15 +22,35 @@ class Player {
     }
 }
 class Plant {
-    constructor(name){
+    constructor(name,id){
         this.name=name;
+        this.id = id;
+        this.harvestable = false;
+    }
+    harvest(){
+        console.log("Harvesting "+ this.name);
+        player.plot.splice(player.plot.indexOf(this),1);
+        if(this.name == "Tomato"){
+            player.inventory.set("Tomato", player.inventory.get("Tomato")+1); 
+            //console.log(player.inventory);
+        }
+        else if(this.name == "Potato"){
+            player.inventory.set("Potato", player.inventory.get("Potato")+1); 
+            console.log(player.inventory);
+        }
+        else{
+            console.log("Name is " + this.name);
+        }
+    }
+    grow(){
+        this.harvestable = true;
     }
 
 }
 let player, shopPotato, shopTomato;
 function buyTomato(){
     let price = 10;
-    console.log("tomato");
+    console.log("Buying tomato");
     if(player.gold<price){
         alert("You can't afford any of my tomatos sonny!");
     }
@@ -41,7 +61,7 @@ function buyTomato(){
 }
 function buyPotato(){
     let price = 10;
-    console.log("potato");
+    console.log("Buying potato");
     if(player.gold<price){
         alert("You can't afford any of my potatos sonny!");
     }
@@ -51,9 +71,25 @@ function buyPotato(){
     }
 }
 function plantT(){
-    let plant = new Plant("Tomato");
-    player.plot.push(plant); //push plant onto plot
-    window.setTimeout(plant.grow,10000);//grow plant after 10 seconds
+    if(player.tomato>0){
+        let plant = new Plant("Tomato",guidGenerator());
+        player.plot.push(plant); //push plant onto plot
+        window.setTimeout(plant.grow,10000);//grow plant after 10 seconds
+    }
+    else{
+        console.log("Sorry you don't have the seeds to do this");
+    }
+    
+}
+function plantP(){
+    if(player.potato>0){
+        let plant = new Plant("Potato",guidGenerator());
+        player.plot.push(plant); //push plant onto plot
+        window.setTimeout(plant.grow,10000);//grow plant after 10 seconds
+    }
+    else{
+        console.log("Sorry you don't have the seeds to do this");
+    }
 }
 window.onload = function WindowLoad(event) {
     //Initialize player
