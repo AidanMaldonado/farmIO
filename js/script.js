@@ -1,7 +1,3 @@
-
-<<<<<<< HEAD
-
-=======
 class Player {
     constructor(tomato,potato,gold){
         this.tomato=tomato;
@@ -35,7 +31,6 @@ class Player {
 let player = object.addEventListener("load", function(){
     return new Player(0,0,100);
 });
-<<<<<<< HEAD
 
 let shopTomato = document.querySelector("#shop-tomato");
 shopTomato.addEventListener(onclick,player.buyTomato());
@@ -43,6 +38,3 @@ shopTomato.addEventListener(onclick,player.buyTomato());
 let shopPotato = document.querySelector("#shop-potato");
 shopPotato.addEventListener(onclick,player.buyPotato());
 
-=======
->>>>>>> 22feb5777a288b3c47cbf4617f40bc86cc9fd816
->>>>>>> 137f061896f84f80c41666c5cd37b626a7810e1d
