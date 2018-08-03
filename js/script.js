@@ -5,36 +5,46 @@ class Player {
         this.gold = gold;
         this.plot = [];
     }
-    buyTomato(price){
-        if(this.gold<price){
-            alert("You can't afford any of my tomatos sonny!");
-            break;
-        }
-        else{
-            this.tomato++;
-            gold-=price;
-        }
-    }
-    buyPotato(price){
-        if(this.gold<price){
-            alert("You can't afford any of my potatos sonny!");
-            break;
-        }
-        else{
-            this.potato++;
-            gold-=price;
-        }
-    }
+    
     
 
 }
-let player = object.addEventListener("load", function(){
-    return new Player(0,0,100);
-});
+let player, shopPotato, shopTomato;
+function buyTomato(){
+    let price = 10;
+    console.log("tomato");
+    if(player.gold<price){
+        alert("You can't afford any of my tomatos sonny!");
+    }
+    else{
+        player.tomato++;
+        player.gold-=price;
+    }
+}
+function buyPotato(){
+    let price = 10;
+    console.log("potato");
+    if(player.gold<price){
+        alert("You can't afford any of my potatos sonny!");
+    }
+    else{
+        player.potato++;
+        player.gold-=price;
+    }
+}
+window.onload = function WindowLoad(event) {
+    alert("Page is loaded");
+    player = new Player(0,0,100);
+    shopTomato = document.querySelector(".shop-tomato");
+    shopTomato.addEventListener('click',buyTomato);
 
-let shopTomato = document.querySelector(".shop-tomato");
-shopTomato.addEventListener(onclick,player.buyTomato());
+    shopPotato = document.querySelector(".shop-potato");
+    shopPotato.addEventListener('click',buyPotato);
+    alert("Code is maybe good");
+}
+// let player = document.querySelector("body").addEventListener("load", function(){
+//     return new Player(0,0,100);
+// });
 
-let shopPotato = document.querySelector(".shop-potato");
-shopPotato.addEventListener(onclick,player.buyPotato());
+
 
