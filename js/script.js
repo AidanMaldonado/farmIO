@@ -1,4 +1,3 @@
-
 class Player {
     constructor(tomato,potato,gold){
         this.tomato=tomato;
@@ -32,3 +31,10 @@ class Player {
 let player = object.addEventListener("load", function(){
     return new Player(0,0,100);
 });
+
+let shopTomato = document.querySelector("#shop-tomato");
+shopTomato.addEventListener(onclick,player.buyTomato());
+
+let shopPotato = document.querySelector("#shop-potato");
+shopPotato.addEventListener(onclick,player.buyPotato());
+
