@@ -1,7 +1,4 @@
 
-<<<<<<< HEAD
-
-=======
 class Player {
     constructor(tomato,potato,gold){
         this.tomato=tomato;
@@ -35,4 +32,3 @@ class Player {
 let player = object.addEventListener("load", function(){
     return new Player(0,0,100);
 });
->>>>>>> 22feb5777a288b3c47cbf4617f40bc86cc9fd816
