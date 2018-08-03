@@ -20,6 +20,13 @@ class Player {
         this.inventory.set("Tomato",0);
         this.inventory.set("Potato",0);
     }
+    // spendgold(amt){
+    //     this.gold -= amt;
+    // }
+    // get gold(){
+    //     return this.gold;
+    // }
+    //should I be using getters and setters?
 }
 class Plant {
     constructor(name,id){
@@ -91,6 +98,7 @@ function plantP(){
         console.log("Sorry you don't have the seeds to do this");
     }
 }
+
 window.onload = function WindowLoad(event) {
     //Initialize player
     player = new Player(0,0,100);
