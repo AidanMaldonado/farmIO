@@ -1,9 +1,6 @@
 // TODO
 // Add in dynamic id to plant for appending to and removal from the dom
 // Add harvest method to plants
-
-
-
 function guidGenerator() {
     var S4 = function() {
        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -20,13 +17,6 @@ class Player {
         this.inventory.set("Tomato",0);
         this.inventory.set("Potato",0);
     }
-    // spendgold(amt){
-    //     this.gold -= amt;
-    // }
-    // get gold(){
-    //     return this.gold;
-    // }
-    //should I be using getters and setters?
 }
 class Plant {
     constructor(name,id){
@@ -99,6 +89,24 @@ function plantP(){
     }
 }
 
+function sellT(){
+    if(player.inventory.get["Tomato"]>0){
+        player.gold += 10;
+        player.inventory.set("Tomato",player.inventory.get["Tomato"]-1);
+    }
+    else{
+        console.log("No tomato's to sell!")
+    }
+}
+function sellP(){
+    if(player.inventory.get["Potato"]>0){
+        player.gold += 15;
+        player.inventory.set("Potato",player.inventory.get["Potato"]-1);
+    }
+    else{
+        console.log("No potato's to sell!")
+    }
+}
 window.onload = function WindowLoad(event) {
     //Initialize player
     player = new Player(0,0,100);
