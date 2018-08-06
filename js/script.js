@@ -42,7 +42,6 @@ class Plant {
     grow(){
         this.harvestable = true;
     }
-
 }
 let player, shopPotato, shopTomato;
 function buyTomato(){
@@ -72,6 +71,21 @@ function plantT(){
         let plant = new Plant("Tomato",guidGenerator());
         player.plot.push(plant); //push plant onto plot
         window.setTimeout(plant.grow,10000);//grow plant after 10 seconds
+        player.tomato--;
+        if(document.querySelector("#tomatoSellNum")==null){
+            let inventory = document.querySelector(".inventory");
+            let tomatoDiv = document.createElement("div");
+            tomatoDiv.appendChild(document.createTextNode("Tomato: "));
+            tomatoDiv.appendChild(document.createTextNode(0));
+            let tCount = document.createElement("input");
+            tCount.setAttribute("id","tomatoSellNum");
+            tCount.setAttribute("type","number");
+            tCount.setAttribute("min", 0);
+            tCount.setAttribute("step", 1);
+            tCount.value = 0;
+            tomatoDiv.appendChild(tCount);
+            inventory.appendChild(tomatoDiv);
+        }
     }
     else{
         console.log("Sorry you don't have the seeds to do this");
@@ -83,10 +97,25 @@ function plantP(){
         let plant = new Plant("Potato",guidGenerator());
         player.plot.push(plant); //push plant onto plot
         window.setTimeout(plant.grow,10000);//grow plant after 10 seconds
+        if(document.querySelector("#potatoSellNum")==null){
+            let inventory = document.querySelector(".inventory");
+            let potatoDiv = document.createElement("div");
+            potatoDiv.appendChild(document.createTextNode("Potato"));
+            potatoDiv.appendChild(document.createTextNode(" x0 "));
+            let pCount = document.createElement("input");
+            pCount.setAttribute("id","potatoSellNum");
+            pCount.setAttribute("type","number");
+            pCount.setAttribute("min", 0);
+            pCount.setAttribute("step", 1);
+            pCount.value = 0;
+            potatoDiv.appendChild(pCount);
+            inventory.appendChild(potatoDiv);
+        }
     }
     else{
         console.log("Sorry you don't have the seeds to do this");
     }
+
 }
 
 function sellT(){
