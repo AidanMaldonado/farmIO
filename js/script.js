@@ -1,6 +1,6 @@
-// TODO
-// Add in dynamic id to plant for appending to and removal from the dom
-// Add harvest method to plants
+/*TODO
+Simplify plant function to just one function. 
+*/
 function guidGenerator() {
     var S4 = function() {
        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -14,8 +14,8 @@ class Player {
         this.gold = gold;
         this.plot = [];
         this.inventory = new Map();
-        this.inventory.set("Tomato",0);
-        this.inventory.set("Potato",0);
+        this.inventory.set("tomato",0);
+        this.inventory.set("potato",0);
     }
 }
 class Plant {
@@ -27,124 +27,75 @@ class Plant {
     harvest(){
         console.log("Harvesting "+ this.name);
         player.plot.splice(player.plot.indexOf(this),1);
-        if(this.name == "Tomato"){
-            player.inventory.set("Tomato", player.inventory.get("Tomato")+1); 
-            //console.log(player.inventory);
-        }
-        else if(this.name == "Potato"){
-            player.inventory.set("Potato", player.inventory.get("Potato")+1); 
-            console.log(player.inventory);
+        player.inventory.set(this.name, player.inventory.get(this.name)+1);
+        if(document.querySelector("#"+this.name+"SellNum")==null){
+            let inventory = document.querySelector(".inventory");
+            let plantDiv = document.createElement("div");
+            plantDiv.appendChild(document.createTextNode(this.name.charAt(0).toUpperCase() + this.name.slice(1)+": "));
+            let plantCount = document.createElement("p");
+            plantCount.innerHTML = 1;
+            plantCount.setAttribute("id",this.name+"AmtNum")
+            plantDiv.appendChild(plantCount);
+            let tCount = document.createElement("input");
+            tCount.setAttribute("id",this.name+"SellNum");
+            tCount.setAttribute("type","number");
+            tCount.setAttribute("min", 1);
+            tCount.setAttribute("max", 1);
+            tCount.setAttribute("step", 1);
+            tCount.value = 0;
+            plantDiv.appendChild(tCount);
+            inventory.appendChild(plantDiv);
         }
         else{
-            console.log("Name is " + this.name);
+            document.querySelector("#"+this.name+"AmtNum").innerHTML = player.inventory.get(this.name);
+            document.querySelector("#"+this.name+"SellNum").setAttribute("max",player.inventory.get(this.name));
         }
     }
     grow(){
         this.harvestable = true;
     }
 }
-let player, shopPotato, shopTomato;
-function buyTomato(){
-    let price = 10;
-    console.log("Buying tomato");
-    if(player.gold<price){
-        alert("You can't afford any of my tomatos sonny!");
-    }
-    else{
-        player.tomato++;
-        player.gold-=price;
-    }
-}
-function buyPotato(){
-    let price = 10;
-    console.log("Buying potato");
+let player;
+
+function buySeed(seedName,price){
+    price = parseInt(price);
+    console.log("Buying "+seedName);
     if(player.gold<price){
         alert("You can't afford any of my potatos sonny!");
     }
     else{
-        player.potato++;
+        eval("player."+seedName+"++");
         player.gold-=price;
     }
 }
-function plantT(){
-    if(player.tomato>0){
-        let plant = new Plant("Tomato",guidGenerator());
+
+function plantSeed(seedName){
+    if(eval("player."+seedName)>0){
+        let plant = new Plant(seedName,guidGenerator());
         player.plot.push(plant); //push plant onto plot
         window.setTimeout(plant.grow,10000);//grow plant after 10 seconds
-        player.tomato--;
-        if(document.querySelector("#tomatoSellNum")==null){
-            let inventory = document.querySelector(".inventory");
-            let tomatoDiv = document.createElement("div");
-            tomatoDiv.appendChild(document.createTextNode("Tomato: "));
-            tomatoDiv.appendChild(document.createTextNode(0));
-            let tCount = document.createElement("input");
-            tCount.setAttribute("id","tomatoSellNum");
-            tCount.setAttribute("type","number");
-            tCount.setAttribute("min", 0);
-            tCount.setAttribute("step", 1);
-            tCount.value = 0;
-            tomatoDiv.appendChild(tCount);
-            inventory.appendChild(tomatoDiv);
-        }
+        eval("player."+seedName+" --");
+        
     }
     else{
         console.log("Sorry you don't have the seeds to do this");
     }
     
 }
-function plantP(){
-    if(player.potato>0){
-        let plant = new Plant("Potato",guidGenerator());
-        player.plot.push(plant); //push plant onto plot
-        window.setTimeout(plant.grow,10000);//grow plant after 10 seconds
-        if(document.querySelector("#potatoSellNum")==null){
-            let inventory = document.querySelector(".inventory");
-            let potatoDiv = document.createElement("div");
-            potatoDiv.appendChild(document.createTextNode("Potato"));
-            potatoDiv.appendChild(document.createTextNode(" x0 "));
-            let pCount = document.createElement("input");
-            pCount.setAttribute("id","potatoSellNum");
-            pCount.setAttribute("type","number");
-            pCount.setAttribute("min", 0);
-            pCount.setAttribute("step", 1);
-            pCount.value = 0;
-            potatoDiv.appendChild(pCount);
-            inventory.appendChild(potatoDiv);
-        }
-    }
-    else{
-        console.log("Sorry you don't have the seeds to do this");
-    }
 
-}
-
-function sellT(){
-    if(player.inventory.get["Tomato"]>0){
+function sell(plantName){
+    if(player.inventory.get[plantName]>0){
         player.gold += 10;
-        player.inventory.set("Tomato",player.inventory.get["Tomato"]-1);
+        player.inventory.set(plantName,player.inventory.get[plantName]-1);
     }
     else{
-        console.log("No tomato's to sell!")
+        console.log("No "+plantName+"'s to sell!")
     }
 }
-function sellP(){
-    if(player.inventory.get["Potato"]>0){
-        player.gold += 15;
-        player.inventory.set("Potato",player.inventory.get["Potato"]-1);
-    }
-    else{
-        console.log("No potato's to sell!")
-    }
-}
+
 window.onload = function WindowLoad(event) {
     //Initialize player
     player = new Player(0,0,100);
-    //set up shop buttons
-    shopTomato = document.querySelector(".shop-tomato");
-    shopTomato.addEventListener('click',buyTomato);
-
-    shopPotato = document.querySelector(".shop-potato");
-    shopPotato.addEventListener('click',buyPotato);
 }
 
 
