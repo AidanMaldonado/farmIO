@@ -55,7 +55,7 @@ class Plant {
         this.harvestable = true;
     }
 }
-let player;
+let player, seedToPlant;
 
 function buySeed(seedName,price){
     price = parseInt(price);
@@ -69,12 +69,16 @@ function buySeed(seedName,price){
     }
 }
 
-function plantSeed(seedName){
-    if(eval("player."+seedName)>0){
-        let plant = new Plant(seedName,guidGenerator());
+function changePlanting(plant){
+    seedToPlant = plant;
+}
+
+function plantSeed(){
+    if(eval("player."+seedToPlant)>0){
+        let plant = new Plant(seedToPlant,guidGenerator());
         player.plot.push(plant); //push plant onto plot
         window.setTimeout(plant.grow,10000);//grow plant after 10 seconds
-        eval("player."+seedName+" --");
+        eval("player."+seedToPlant+" --");
         
     }
     else{
