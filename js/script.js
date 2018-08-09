@@ -12,22 +12,25 @@ class Player {
         this.tomato=tomato;
         this.potato=potato;
         this.gold = gold;
-        this.plot = [];
+        this.plot = [null,null,null,null,null,null,null,null,null];
         this.inventory = new Map();
         this.inventory.set("tomato",0);
         this.inventory.set("potato",0);
     }
 }
 class Plant {
-    constructor(name,id){
+    constructor(name, plotPos){
         this.name=name;
-        this.id = id;
         this.harvestable = false;
+        this.plotPos = plotPos
+        this.watered = false;
+        this.penalty = 0;
     }
     harvest(){
         console.log("Harvesting "+ this.name);
-        player.plot.splice(player.plot.indexOf(this),1);
+        player.plot[player.plot.indexOf(this)] = null;
         player.inventory.set(this.name, player.inventory.get(this.name)+1);
+        document.querySelector("#plot-"+this.plotPos).innerHTML = "Plant here!";
         if(document.querySelector("#"+this.name+"SellNum")==null){
             let inventory = document.querySelector(".inventory");
             let plantDiv = document.createElement("div");
@@ -55,7 +58,7 @@ class Plant {
         this.harvestable = true;
     }
 }
-let player, seedToPlant;
+let player, currentCommand, water = 5;
 
 function buySeed(seedName,price){
     price = parseInt(price);
@@ -69,16 +72,41 @@ function buySeed(seedName,price){
     }
 }
 
-function changePlanting(plant){
-    seedToPlant = plant;
+function changeCommand(plant){
+    currentCommand = plant;
 }
 
-function plantSeed(){
-    if(eval("player."+seedToPlant)>0){
-        let plant = new Plant(seedToPlant,guidGenerator());
-        player.plot.push(plant); //push plant onto plot
+function interact(plotNum){
+    if(currentCommand == "water"){
+        if(player.plot[parseInt(plotNum)] == "null"){
+            console.log("Nothing to water!")
+        }
+        else{
+            player.plot[parseInt(plotNum)].watered = true;
+        }
+
+    }
+    else if(currentCommand == "harvest"){
+        if(player.plot[parseInt(plotNum)] == "null" || player.plot[parseInt(plotNum)].harvestable == false){
+            console.log("Nothing to harvest!")
+        }
+        else{
+            player.plot[parseInt(plotNum)].harvest();
+        }
+    }
+    else if(eval("player."+currentCommand)>0){
+        let plant = new Plant(currentCommand, parseInt(plotNum));
+        if(player.plot[parseInt(plotNum)]==null){
+            player.plot[parseInt(plotNum)] = plant;
+            let btn = document.querySelector("#plot-"+plotNum);
+            btn.innerHTML = currentCommand.charAt(0).toUpperCase() + currentCommand.slice(1);
+        }
+        else {
+            console.log("Plant already planted");
+        }
+        // player.plot.push(plant);  //push plant onto plot
         window.setTimeout(plant.grow,10000);//grow plant after 10 seconds
-        eval("player."+seedToPlant+" --");
+        eval("player."+currentCommand+" --");
         
     }
     else{

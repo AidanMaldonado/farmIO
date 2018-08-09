@@ -41,21 +41,23 @@
             <div class="card">
                 <img class="card-img-top" src="../images/money.jpg" alt="Card image cap">
                 <div class="row">
-                    <div class="col"><button onclick = "plantSeed()">Plant here!</button></div>
-                    <div class="col"><button onclick = "plantSeed()">Plant here!</button></div>
-                    <div class="col"><button onclick = "plantSeed()">Plant here!</button></div>
+                    <div class="col" ><button id ="plot-0" onclick = "interact('0')">Plant here!</button></div>
+                    <div class="col" ><button id ="plot-1" onclick = "interact('1')">Plant here!</button></div>
+                    <div class="col" ><button id ="plot-2" onclick = "interact('2')">Plant here!</button></div>
                     <div class="w-100"></div>
-                    <div class="col"><button onclick = "plantSeed()">Plant here!</button></div>
-                    <div class="col"><button onclick = "plantSeed()">Plant here!</button></div>
-                    <div class="col"><button onclick = "plantSeed()">Plant here!</button></div>
+                    <div class="col" ><button id ="plot-3" onclick = "interact('3')">Plant here!</button></div>
+                    <div class="col" ><button id ="plot-4" onclick = "interact('4')">Plant here!</button></div>
+                    <div class="col" ><button id ="plot-5" onclick = "interact('5')">Plant here!</button></div>
                     <div class="w-100"></div>
-                    <div class="col"><button onclick = "plantSeed()">Plant here!</button></div>
-                    <div class="col"><button onclick = "plantSeed()">Plant here!</button></div>
-                    <div class="col"><button onclick = "plantSeed()">Plant here!</button></div>
+                    <div class="col" ><button id ="plot-6" onclick = "interact('6')">Plant here!</button></div>
+                    <div class="col" ><button id ="plot-7" onclick = "interact('7')">Plant here!</button></div>
+                    <div class="col" ><button id ="plot-8" onclick = "interact('8')">Plant here!</button></div>
                   </div>
                 <div id="plant-button">
-                    <button onclick = "changePlanting('tomato')">Tomato</button>
-                    <button onclick = "changePlanting('potato')">Potato</button>
+                    <button onclick = "changeCommand('tomato')">Tomato</button>
+                    <button onclick = "changeCommand('potato')">Potato</button>
+                    <button onclick = "changeCommand('harvest')">Harvest</button>
+                    <button onclick = "changeCommand('water')">Water</button>
                 </div>
             </div>
         </div>
