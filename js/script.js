@@ -12,7 +12,7 @@ class Player {
         this.tomato=tomato;
         this.potato=potato;
         this.gold = gold;
-        this.plot = [null,null,null,null,null,null,null,null,null];
+        this.plot = [null,null,null,null,null,null,null,null,null]; //plot for players plants
         this.inventory = new Map();
         this.inventory.set("tomato",0);
         this.inventory.set("potato",0);
@@ -22,15 +22,16 @@ class Plant {
     constructor(name, plotPos){
         this.name=name;
         this.harvestable = false;
-        this.plotPos = plotPos
+        this.plotPos = plotPos; // Plant's position in plot array
         this.watered = false;
-        this.penalty = 0;
+        this.penalty = 0; // If the plant is not watered after a day, there will be a penalty in its selling price
     }
     harvest(){
         console.log("Harvesting "+ this.name);
-        player.plot[player.plot.indexOf(this)] = null;
-        player.inventory.set(this.name, player.inventory.get(this.name)+1);
-        document.querySelector("#plot-"+this.plotPos).innerHTML = "Plant here!";
+        player.plot[player.plot.indexOf(this)] = null; // Remove plant from plot
+        player.inventory.set(this.name, player.inventory.get(this.name)+1); // Increases tomatos in players inventory
+        document.querySelector("#plot-"+this.plotPos).innerHTML = "Plant here!"; // Resets button text. 
+        //This whole if else statment is just to update the players inventory on screen. 
         if(document.querySelector("#"+this.name+"SellNum")==null){
             let inventory = document.querySelector(".inventory");
             let plantDiv = document.createElement("div");
